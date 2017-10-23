@@ -13,45 +13,45 @@ as well as keep track of profit and the amount of all denominations of money in 
 
 class Pizza
 {
-	private:
-		int sizeSmall;
-		int sizeMed;
-		int sizeLar;
-		double costSmall;
-		double costMed;
-		double costLar;
-		double toppingSmallMed;
-		double toppingLarge;
-	public:
-		double totalCost;
-		void setSize(int);
-		int getSize();
-		void setCost();
-		double getCost();
-		void setTopping();
-		int getTopping();
-		Pizza(int, int);
+private:
+	int sizeSmall;
+	int sizeMed;
+	int sizeLar;
+	double costSmall;
+	double costMed;
+	double costLar;
+	double toppingSmallMed;
+	double toppingLarge;
+public:
+	double totalCost;
+	void setSize(int);
+	int getSize();
+	void setCost();
+	double getCost();
+	void setTopping();
+	int getTopping();
+	Pizza(int, int);
 };
 
 class Register
 {
-	private:
-		double nickle;
-		double dime;
-		double quarter;
-		double dollar;
-		double five;
-		double ten;
-		double payment;
-		double profit;
-	public:
-		void setProfit();
-		double getProfit();
-		void setCost(int, int);
-		double getCost();
-		void setPayment();
-		void printEverything();
-		Register();
+private:
+	double nickle;
+	double dime;
+	double quarter;
+	double dollar;
+	double five;
+	double ten;
+	double payment;
+	double profit;
+public:
+	void setProfit();
+	double getProfit();
+	void setCost(int, int);
+	double getCost();
+	void setPayment();
+	void printEverything();
+	Register();
 };
 
 int main()
@@ -129,7 +129,7 @@ Register::Register()
 void Register::setProfit()
 {
 	double defaultMoney = 77.00;
-	double afterMoney = ((nickle * 0.05) + (dime * 0.10) + (quarter * 0.25) + (dollar * 1.00) + (five * 5.00) + (ten * 10.00) + defaultMoney);
+	double afterMoney = ((this->nickle * 0.05) + (this->dime * 0.10) + (this->quarter * 0.25) + (this->dollar * 1.00) + (this->five * 5.00) + (this->ten * 10.00));
 	profit = afterMoney - defaultMoney;
 }
 
@@ -164,27 +164,27 @@ void Register::setPayment()
 			int userInput;
 			cout << "How many nickles? " << endl;
 			cin >> userInput;
-			this->nickle = userInput;
+			this->nickle = userInput + nickle;
 
 			cout << "How many dimes? " << endl;
 			cin >> userInput;
-			this->dime = userInput;
+			this->dime = userInput + dime;
 
 			cout << "How many quarters? " << endl;
 			cin >> userInput;
-			this->quarter = userInput;
+			this->quarter = userInput + quarter;
 
 			cout << "How many dollars? " << endl;
 			cin >> userInput;
-			this->dollar = userInput;
+			this->dollar = userInput + dollar;
 
 			cout << "How many fives? " << endl;
 			cin >> userInput;
-			this->quarter = userInput;
+			this->five = userInput + five;
 
 			cout << "How many tens? " << endl;
 			cin >> userInput;
-			this->quarter = userInput;
+			this->ten = userInput + ten;
 		}
 		else if (userChar == 'N')
 		{
