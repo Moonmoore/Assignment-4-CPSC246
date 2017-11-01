@@ -13,6 +13,8 @@ The purpose of this assignment is to create POS program that enables a trained e
 as well as keep track of profit and the amount of all denominations of money in the register.
 Copyright @2017
 */
+
+//Global variables for pizza
 const double COSTSMALL = 6.95;
 const double COSTMED = 7.95;
 const double COSTLAR = 8.95;
@@ -28,7 +30,6 @@ private:
 	string size;
 	double totalCost;
 public:
-
 	void setSize();
 	string getSize();
 	void setCost();
@@ -64,17 +65,20 @@ public:
 
 int main()
 {
+	//Vector to hold current order
 	vector<Pizza> orderNumber(5);
+	//Variables needed for loops and inputs
 	bool started = false;
 	char userInput = 'x';
 	int userInput1 = 0;
 	char nextPizza = 'y';
 	double totalCost = 0.00;
-
-
+	
+	//Declaring the needed variables to call the classes
 	Register r;
 	Pizza a, b, c, d, e;
-
+	
+	//First loop that asks the worker if they want to open the register and prints the options for the register
 	while (userInput != 'y')
 	{
 		cout << "Would you like to open up this register? (y/n)\n";
@@ -94,15 +98,16 @@ int main()
 			started = false;
 		}
 	}
+	
+	//If the register is opened then the switch case loop starts
 	while (started != false)
 	{
-
 		cin >> userInput1;
 		switch (userInput1)
 		{
 		case 1:
-			/* This ask the user for size of pizza and toppings. Then it will give cost of each pizza and total cost. max five pizzas*/
-			// the next nested if statements will be the five possible pizzas
+			/*This ask the user for size of pizza and toppings. Then it will give cost of each pizza and total cost. Max of five pizzas*/
+			//the next nested if statements will be the five possible pizzas
 			a.setSize();
 			a.setTopping();
 			a.setCost();
@@ -172,6 +177,7 @@ int main()
 				e.printCustomerTopping();
 			}
 
+			//Generates the total cost and then "passes" it to the register class
 			totalCost += (a.getCost() + b.getCost() + c.getCost() + d.getCost() + e.getCost());
 			r.setCost(totalCost);
 
@@ -184,6 +190,7 @@ int main()
 			cout << "Press 6 to display this screen again: " << endl;
 			break;
 		case 2:
+			//Allows the worker to enter what the customer is paying and how much of each denomination
 			r.setPayment();
 			cout << "Press 1 to make a new order: " << endl;
 			cout << "Press 2 to enter customer payment: " << endl;
@@ -193,6 +200,8 @@ int main()
 			cout << "Press 6 to display this screen again: " << endl;
 			break;
 		case 3:
+			//Calculates the amount of profit that the company has earned for the duration of being open for this register
+			//Then prints out the profit
 			r.setProfit();
 			r.getProfit();
 			cout << "Press 1 to make a new order: " << endl;
@@ -203,6 +212,7 @@ int main()
 			cout << "Press 6 to display this screen again: " << endl;
 			break;
 		case 4:
+			//Prints # of all denominations and profit
 			r.printEverything();
 			cout << "Press 1 to make a new order: " << endl;
 			cout << "Press 2 to enter customer payment: " << endl;
@@ -212,11 +222,13 @@ int main()
 			cout << "Press 6 to display this screen again: " << endl;
 			break;
 		case 5:
+			//Closes the register, outputs everything to "Report.txt", and prints everything the the screen
 			r.close();
 			r.printEverything();
 			started = false;
 			break;
 		case 6:
+			//Simply prints the menu screen again
 			cout << "Press 1 to make a new order: " << endl;
 			cout << "Press 2 to enter customer payment: " << endl;
 			cout << "Press 3 to print the amount of profit so far: " << endl;
@@ -225,16 +237,18 @@ int main()
 			cout << "Press 6 to display this screen again: " << endl;
 			break;
 		default:
+			//Stops the worker from inputing anything other than 1-6
 			cout << "Not a Valid Choice.\n" << "Choose again.\n";
 			break;
 		}
 	}
-
 	return 0;
 }
 
 Register::Register()
 {
+	//Initilizes the ragister to have this amount of money in it by default
+	//Stores all denominations
 	nickle = 40.0;
 	dime = 50.0;
 	quarter = 40.0;
@@ -247,6 +261,7 @@ Register::Register()
 
 void Register::setProfit()
 {
+	//Calculates the profit
 	double defaultMoney = 77.00;
 	double afterMoney = ((this->nickle * 0.05) + (this->dime * 0.10) + (this->quarter * 0.25) + (this->dollar * 1.00) + (this->five * 5.00) + (this->ten * 10.00));
 	profit = afterMoney - defaultMoney;
@@ -254,12 +269,14 @@ void Register::setProfit()
 
 double Register::getProfit()
 {
+	//Returns the profit
 	cout << "Profit is: " << profit << endl;
 	return profit;
 }
 
 void Register::setCost(double cost)
 {
+	
 	this->cost = cost;
 }
 
@@ -271,6 +288,9 @@ double Register::getCost()
 
 void Register::setPayment()
 {
+	//Prompts the worker to see if the customer is paying enough money
+	//If they are then they can input all #'s of denominations
+	//Then loops through to calculate how much of each denomination to give as change
 	double change = 0.00;
 	char userChar;
 	cout << "Is the customer paying enough? y for Yes, n for No." << endl;
@@ -381,6 +401,7 @@ void Register::setPayment()
 
 void Register::printEverything()
 {
+	//Prints everything
 	cout << "Profit: " << profit << endl << "Customer Payment: " << payment << endl << "Nickles: " << nickle << endl;
 	cout << "Dimes: " << dime << endl << "Quarters: " << quarter << endl << "Dollars: " << dollar << endl << "Fives: " << five << endl;
 	cout << "Tens: " << ten << endl;
@@ -388,6 +409,7 @@ void Register::printEverything()
 
 void Register::close()
 {
+	//Prints everything to the file "Report.txt"
 	ofstream report;
 	report.open("Report.txt");
 	if (report.is_open())
@@ -401,6 +423,7 @@ void Register::close()
 
 void Pizza::setSize()
 {
+	//Asks the user what size they want to order
 	int userInput;
 	cout << "What size pizza?: " << endl << "1. Small" << endl << "2. Medium" << endl << "3. Large" << endl;
 	cin >> userInput;
@@ -424,11 +447,13 @@ void Pizza::setSize()
 
 string Pizza::getSize()
 {
+	//Returns the size of the pizza
 	return size;
 }
 
 void Pizza::setCost() //based on size and number of toppings
 {
+	//Calculates the cost of the pizza depending on the size of the pizza and the toppings
 	int numToppings = customerToppings.size();
 	if (size == "small")
 	{
@@ -470,11 +495,13 @@ void Pizza::setCost() //based on size and number of toppings
 
 double Pizza::getCost()
 {
+	//Returns the cost of the pizza
 	return totalCost;
 }
 
 void Pizza::setTopping()
 {
+	//Asks the user what toppings they want on their pizza
 	char userInput;
 	int userChoice;
 	this->customerToppings.clear();
@@ -498,7 +525,8 @@ void Pizza::setTopping()
 	}
 	cout << endl;
 }
-void Pizza::printCustomerTopping() {
+void Pizza::printCustomerTopping()
+{
 	for (size_t i = 0; i < customerToppings.size(); i++) {
 		cout << this->customerToppings.at(i) << endl;
 	}
